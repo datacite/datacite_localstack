@@ -5,11 +5,15 @@ services:
     ports:
       - "4566:4566"
     environment:
-      - SERVICES=sqs
+      - SSERVICES=sqs
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_ENDPOINT=http://localhost:4566
+      - AWS_REGI0N=us-east-1
+      - AWS_ACCESS_KEY=test
+      - AWS_SECRET_ACCESS_KEY=test
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./setup.sh:/etc/localstack/init/ready.d/setup.sh
     networks:
       localstack_network:
         ipv4_address: 10.0.2.20
