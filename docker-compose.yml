@@ -1,0 +1,26 @@
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: datacite_localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SSERVICES=sqs
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_ENDPOINT=http://localhost:4566
+      - AWS_REGI0N=us-east-1
+      - AWS_ACCESS_KEY=test
+      - AWS_SECRET_ACCESS_KEY=test
+    volumes:
+      - ./setup.sh:/etc/localstack/init/ready.d/setup.sh
+    networks:
+      localstack_network:
+        ipv4_address: 10.0.2.20
+
+networks:
+  localstack_network:
+    name: localstack_network
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24
